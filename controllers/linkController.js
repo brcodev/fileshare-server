@@ -53,7 +53,7 @@ exports.nuevoEnlace = async (req, res, next) => {
             enlace.nombre = req.file.filename;
             enlace.nombre_original = req.file.originalname;
 
-            if (req.user) {
+           /* if (req.user) {
                 
                 const { password, descargas } = req.body
                 enlace.password = password;
@@ -73,7 +73,30 @@ exports.nuevoEnlace = async (req, res, next) => {
 
                 enlace.autor = req.user.id;
 
-            }
+            } */
+
+             if (req.user) {
+                
+                const password = req.file.password;
+                const descargas = req.file.descargas;
+                enlace.password = password;
+
+                if(descargas > 10){
+                    descargas = 10;
+                }
+
+                if (descargas) {
+                    enlace.descargas = descargas;
+                }
+
+                if (password) {
+                    const salt = await bcrypt.genSalt(10);
+                    enlace.password = await bcrypt.hash(password, salt);
+                }
+
+                enlace.autor = req.user.id;
+
+            } 
 
             try {
                 await enlace.save();
