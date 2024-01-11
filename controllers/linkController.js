@@ -140,11 +140,19 @@ exports.verificarPassword = async (req, res, next) => {
 
     const enlace = await Link.findOne({ url });
 
-    if (bcrypt.compareSync(passwordVerify, enlace.password)) {
-        next();
-    } else {
-        return res.status(401).json({ msg: 'Contraseña no válida' })
+    try {
+
+        if (bcrypt.compareSync(passwordVerify, enlace.password)) {
+            next();
+        } else {
+            return res.status(401).json({ msg: 'Contraseña no válida' })
+        }
+        
+    } catch (error) {
+        return res.status(401).json({ msg: 'Error' })
     }
+
+   
 
 
 }
