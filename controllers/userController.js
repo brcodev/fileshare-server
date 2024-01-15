@@ -77,7 +77,7 @@ exports.recuperarCuenta = async (req, res) => {
         const renderedEmailTemplate = compiledEmailTemplate({ username: userName, link: link, logo: imageLogo, imgRecovery: imgRecovery});
 
         const info = await transporter.sendMail({
-            from: '"FileShare recuperación de contraseña" <contact@devsoftware.site>', // sender address
+            from: '"FileShare recuperación de contraseña" <contact@softwsolutions.com>', // sender address
             to: userEMail, 
             subject: subject, 
             html: renderedEmailTemplate,
